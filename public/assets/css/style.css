@@ -1,0 +1,65 @@
+.bcg-dark{
+    background-color: #1a1a1a;
+    color:#ffffff;
+}
+.jumbotron {
+    padding-left: 3px;
+    background-color:#ffffff;
+}
+
+body{
+    background-color:#f2f2f2;
+}
+
+.btn{
+    border:none;
+}
+
+.card-body{
+
+    padding-bottom: 0.25rem !important;
+}
+
+.del-item{
+    font-weight: 500;
+}
+
+.card-subtitle {
+    font-size: 0.70rem;
+}
+
+#signup-form{
+    background-color:#ffffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding:24px;
+    margin-top:100px;
+}
+
+input[type=text]{
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-radius: 0%;
+}
+
+input[type=email]{
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-radius: 0%;
+}
+input[type=password]{
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-radius: 0%;
+}
+
+.form-btn{
+    padding: .670rem .200rem;
+    border:none;
+    border-radius: 0%;
+}
+
+.fake-input { position: relative; }
+.fake-input img { position: absolute; top: 2px; right: 5px }
