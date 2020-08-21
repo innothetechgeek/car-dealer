@@ -26,6 +26,7 @@ Route::get('car/add',function(){
 });
 
 Route::get('car/list', 'CarController@list');
+Route::post('car/delete', 'CarController@delete');
 
 
 

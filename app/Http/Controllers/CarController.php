@@ -37,16 +37,22 @@ class CarController extends Controller
 
     }
 
-    public function edit(){
+   public function delete(Request $request){
 
-    }
+        $car_id = $request->car_id;
+        $car = Car::find($car_id);
+        Storage::disk('public_images')->delete($car->image);
+        $car->delete();
+        $request->session()->flash('status', 'Car deleted Successful!');
+        return response()->json(['url'=>url('car/list')]);
+   }
 
     public function list(){
 
-        $storage_path = Storage::disk('public_images')->getAdapter()->getPathPrefix();
+        
 
         $cars = DB::table('cars')->get();
-        return view('car.list', ['cars' => $cars,'storage_path'=>$storage_path]);
+        return view('car.list', ['cars' => $cars]);
     }
     
 }

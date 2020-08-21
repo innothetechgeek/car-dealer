@@ -27,13 +27,81 @@
                 <h6 class="card-subtitle mb-2 text-muted">{{$car->created_at}}</h6>
                     <p class="card-text">Your price is R{{$car->price}}</p>
                     <div class="d-flex justify-content-end">      
-                        <small class="del-item">delete item</small>                     
+                        <small id = "car#{{$car->id}}" class="del-item" data-title="Delete Car?">delete item</small>                     
                     </div>
                 </div>
             </div>
         </div>
     @endforeach           
     </div>
+
+    <?php if(Session::get('status') !== null){ ?>
+        <script>
+          var status = "<?php Session::get('status') ?>";
+           $.toast({
+                heading: 'Success',
+                text: status,
+                showHideTransition: 'slide',
+                icon: 'info'
+            });
+        </script>
+    <?php } ?>
+
+
+    @section('scripts')
+    <!-- loads jquery confirmation plugin -->
+    <script type="text/javascript" src="{{ URL::asset('assets/js/jquery-confirm.min.js') }}"></script>
+    <script>
+
+    $( 'body').on('click', '.del-item', function(){
+        showConfirmationModal($(this));
+    });
+      /*jquery confirmation modal - documentation available here: https://craftpip.github.io/jquery-confirm */
+    function showConfirmationModal(input_id){
+        $.confirm({
+            title: 'Confirm!',
+            content: 'Are you sure you want to delete this car?',
+            buttons: {
+                yes: {
+                    text: 'Yes',
+                    action: function (){
+                        deleteCar(input_id);
+                    }
+                },
+                no: {
+                    text: 'No',
+                    action: function () {
+                    }
+                }
+            }
+        });
+    }
+
+    function deleteCar(input_id){
+        var id = input_id.attr('id');
+        var car_id = id.split('#')[1];
+        var _token   = $('meta[name="csrf-token"]').attr('content');
+        var route  = "{{ url('car/delete') }}";
+           
+        $.ajax({
+        url: route,
+        type:"POST",
+        data:{
+           car_id:car_id,
+          _token: _token
+        },
+        success:function(response){
+          if(response) {
+            window.location=response.url;
+            $('.success').text(response.success);
+            $("#ajaxform")[0].reset();
+          }
+        },
+       });
+
+    }
+    </script> 
+    @endsection
 @endsection
 
  
