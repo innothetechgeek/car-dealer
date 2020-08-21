@@ -41,6 +41,9 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
+        dd('already logged in');
+        if ($this->auth->check()) 
+      
         return view('login');
     }
 
@@ -48,6 +51,6 @@ class LoginController extends Controller
      {
          Auth::logout();
 
-     return redirect('/');
+        return redirect('/');
     }
 }

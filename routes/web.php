@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-})->name('/');
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('/');
 
 Route::get('/admin',function(){
     return view('admin');

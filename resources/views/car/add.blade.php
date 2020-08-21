@@ -2,7 +2,7 @@
 @section('body')
 <div class = "row" >
 <div class="col-md-4 offset-md-4" id = "signup-form">
-    <form method="POST" action="{{ route('addcar') }}">
+    <form method="POST" action="{{ route('addcar') }}" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
     <div class="fake-input">
@@ -24,8 +24,11 @@
     </div>
     <div class="form-group">
        
-        <input type="file" class="form-control-file" id="exampleFormControlFile1">
-    </div>
+    <input type="file" name="image" class="form-control{{ $errors->has('file') ? ' is-invalid' : '' }}" >
+    @error('image')
+        <label  class="error"><strong>{{ $message }}</strong></label>
+    @enderror    
+</div>
     <input type="submit" value="Sign Up" class="btn form-btn  bcg-dark btn-block">
     </form>
 </div>
