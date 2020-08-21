@@ -51,9 +51,7 @@ class CarController extends Controller
 
     }
 
-    public function edit(Request $request,$car_id){
-        
-        
+    public function edit(Request $request,$car_id){       
         
         $car = Car::find($car_id);
 
@@ -69,7 +67,7 @@ class CarController extends Controller
         
         $car = Car::find($car_id);       
         if($request->hasFile($this->imageInputName)){ //new image
-            
+
              ///delete old image
              Storage::disk('public_images')->delete($car->image);
            

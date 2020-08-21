@@ -27,7 +27,7 @@
                     <h5 class="card-title">{{$car->name}}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{$car->created_at}}</h6>
                         <p class="card-text">Your price is R{{$car->price}}</p>
-                        </a>
+                </a>
                         <div class="d-flex justify-content-end">      
                             <small id = "car#{{$car->id}}" style = "cursor:default" class="del-item" data-title="Delete Car?">delete item</small>                     
                         </div>
@@ -44,13 +44,13 @@
     <!-- loads jquery confirmation plugin -->
     <script type="text/javascript" src="{{ URL::asset('assets/js/jquery-confirm.min.js') }}"></script>
     <script>
-    $(".parent > ul > li > a").click( function(e) {
-        e.preventDefault();
-        // ...
-    });
+    
+    //delete car
     $( 'body').on('click', '.del-item', function(e){
         showConfirmationModal($(this),e);
     });
+    
+    //show confirmation modal
       /*jquery confirmation modal - documentation available here: https://craftpip.github.io/jquery-confirm */
     function showConfirmationModal(input_id,e){
         $.confirm({
@@ -71,7 +71,8 @@
             }
         });
     }
-
+    
+    //delete car
     function deleteCar(input_id,e){
         e.preventDefault();
         var id = input_id.attr('id');
@@ -98,6 +99,7 @@
     }
     </script> 
 
+    <!-- show toast at the bottom of the page -->
     <?php if(Session::get('status') !== null){ ?>
         <script>
           var status = "<?php echo Session::get('status') ?>";
