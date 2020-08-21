@@ -19,18 +19,17 @@ Route::get('/admin',function(){
     return view('admin');
 })->middleware('auth');;
 
-Route::post('car/add', 'CarController@add')->name('addcar')->middleware('auth');;
+Route::post('car/add', 'CarController@add')->name('addcar')->middleware('auth');
 
 Route::get('car/add',function(){
     return view('car/add');
 })->middleware('auth');;
 
-Route::get('car/list', 'CarController@list')->middleware('auth');;
+Route::get('car/list', 'CarController@list')->middleware('auth');
 Route::post('car/delete', 'CarController@delete')->middleware('auth');
 
-Route::get('car/edit', function(){
-        return view('car/edit');
-});
+Route::get('car/edit/{id}','CarController@edit')->middleware('auth');
+Route::post('car/edit-car/{id}','CarController@editCar')->middleware('auth');
 
 Auth::routes();
 

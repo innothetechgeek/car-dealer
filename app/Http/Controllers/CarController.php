@@ -29,20 +29,75 @@ class CarController extends Controller
 
     }
 
-    public function validateData($request){
+    public function validateData($request,$method = ''){
+
+        if($method == 'edit'){ //image should not be required on edit
+
+            $image_validation_rules = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'; 
+            
+        }else{ //image is required on add
+
+            $image_validation_rules = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'; 
+
+        }
 
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'price' => 'required',
-             'name' => 'required'
+                'image' => $image_validation_rules,
+                'price' => 'required',
+                'name' => 'required'
         ]);
 
+        
+
+    }
+
+    public function edit(Request $request,$car_id){
+        
+        
+        
+        $car = Car::find($car_id);
+
+        $car  =  $car ?  $car : false;
+
+        return view('car/edit',['car' => $car]);
+
+    }
+
+    public function editCar(Request $request,$car_id){
+
+        $this->validateData($request,'edit'); 
+        
+        $car = Car::find($car_id);       
+        if($request->hasFile($this->imageInputName)){ //new image
+            
+             ///delete old image
+             Storage::disk('public_images')->delete($car->image);
+           
+            $new_path = $this->storeImage($request);
+            $car->image = $new_path;
+           
+            
+            
+        }
+
+        $car->price = $request->price;
+        $car->name = $request->name;
+        
+        $car->save();
+        
+
+        $request->session()->flash('status', "$car->name updated Successfully!"); //success toast
+
+        return redirect('car/list');
+        
     }
 
     public function storeImage($request){
 
         $imageTmpName = $request->file($this->imageInputName);
         $imageName = $imageTmpName->getClientOriginalName();
+
+        $imageName  = (Storage::disk('public_images')->exists('uploads/'.$imageName)) ? rand().'_'.$imageName : $imageName;
            
        
         $image_path = $request->file($this->imageInputName)->storeAs(
