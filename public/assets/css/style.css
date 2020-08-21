@@ -63,3 +63,11 @@ input[type=password]{
 
 .fake-input { position: relative; }
 .fake-input img { position: absolute; top: 2px; right: 5px }
+
+.error{
+    color:red;
+}
+
+.navbar{
+    padding: 0px;
+}

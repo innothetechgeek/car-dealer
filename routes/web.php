@@ -14,17 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    return view('login');
+});
+
+Route::get('/admin',function(){
     return view('admin');
 });
 
-Route::get('register', function () {
-    return view('register');
+Route::get('car/add',function(){
+    return view('car/add');
 });
+
+Auth::routes();
 
 Route::get('registration-successful',function(){
     return view('registration_successful');
 });
-
-Route::get('login',function(){
-    return view('login');
-});
+//Route::get('/home', 'HomeController@index')->name('home');

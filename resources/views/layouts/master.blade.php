@@ -11,18 +11,46 @@
     <title>Hello, world!</title>
   </head>
   <body>
-  <header>
-        <div class="navbar navbar-dark bcg-dark box-shadow">
-        <div class="container d-flex justify-content-between">
-          <a href="#" class="navbar-brand d-flex align-items-center">
+  <nav class="navbar navbar-expand-lg navbar navbar-dark bcg-dark box-shadow">
+      <div class ='container'>
+    <a class="navbar-brand" href="#"><strong>DealerApp</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            @if (!Auth::guest())
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('logout') }}"  onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">Logout</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+            </li>
+            @endif
+        </ul>
+        <span class="navbar-text">
+        <img src="{{asset('/assets/images/logo.png')}}">
+        </span>
+    </div>
+    </div>
+    </nav>
+
+
+
+        <!-- <div class="navbar navbar-dark bcg-dark box-shadow">
+       
+
+         <div class="container d-flex justify-content-between">
+          <a href="{{ URL::asset('/') }}" class="navbar-brand d-flex align-items-center">
             <strong>DealerApp</strong>
           </a>
-            <img src="{{asset('/assets/images/logo.png')}}">
-        </div>
-      </div>
-    </header>
+           
+        </div> -->
+      <!-- </div> --> 
+      @yield('jumbotron')
     <div class=container>
-        @yield('jumbotron')
+       
         @yield('body')
     </div>
 
