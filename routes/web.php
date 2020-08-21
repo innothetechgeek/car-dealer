@@ -15,15 +15,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('login');
-});
+})->name('/');
 
 Route::get('/admin',function(){
     return view('admin');
 });
 
+Route::post('car/add', 'CarController@add')->name('addcar');
+
 Route::get('car/add',function(){
     return view('car/add');
 });
+
+Route::get('car/list', 'CarController@list');
+
+
 
 Auth::routes();
 
