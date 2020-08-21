@@ -35,15 +35,22 @@ class CarController extends Controller
         $car->image = $image_path;
         $car->save();
 
+        $request->session()->flash('status', "$car->name added Successfully!"); //success toast
+
+        return redirect('car/list');
+
     }
 
    public function delete(Request $request){
 
         $car_id = $request->car_id;
         $car = Car::find($car_id);
-        Storage::disk('public_images')->delete($car->image);
+
+        //delete image from storage location
+        Storage::disk('public_images')->delete($car->image);        
+        $request->session()->flash('status', "$car->name deleted Successfully!"); //success toast
+
         $car->delete();
-        $request->session()->flash('status', 'Car deleted Successful!');
         return response()->json(['url'=>url('car/list')]);
    }
 

@@ -33,4 +33,16 @@
     </form>
 </div>
 </div>
+
+<?php if(Session::get('status') !== null){ ?>
+        <script>
+          var status = "<?php echo Session::get('status') ?>";
+           $.toast({
+                heading: 'Success',
+                text: status,
+                showHideTransition: 'slide',
+                icon: 'info'
+            });
+        </script>
+    <?php } ?> 
 @endsection

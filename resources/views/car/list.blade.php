@@ -33,22 +33,11 @@
             </div>
         </div>
     @endforeach           
-    </div>
-
-    <?php if(Session::get('status') !== null){ ?>
-        <script>
-          var status = "<?php Session::get('status') ?>";
-           $.toast({
-                heading: 'Success',
-                text: status,
-                showHideTransition: 'slide',
-                icon: 'info'
-            });
-        </script>
-    <?php } ?>
+    </div>  
 
 
     @section('scripts')
+   
     <!-- loads jquery confirmation plugin -->
     <script type="text/javascript" src="{{ URL::asset('assets/js/jquery-confirm.min.js') }}"></script>
     <script>
@@ -101,7 +90,22 @@
 
     }
     </script> 
+
+<?php if(Session::get('status') !== null){ ?>
+        <script>
+          var status = "<?php echo Session::get('status') ?>";
+           $.toast({
+                heading: 'Success',
+                text: status,
+                showHideTransition: 'slide',
+                icon: 'info'
+            });
+        </script>
+    <?php } ?>    
+
+
     @endsection
+    
 @endsection
 
  
