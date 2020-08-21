@@ -71,3 +71,14 @@ input[type=password]{
 .navbar{
     padding: 0px;
 }
+
+.btn:hover {
+    color: #fff !important;
+    text-decoration: none;
+    background-color: #1a1a1a;
+}
+
+a { color: inherit; }
+
+a:hover { text-decoration:none; color: inherit;}
+     

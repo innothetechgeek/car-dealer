@@ -13,21 +13,9 @@ class CarController extends Controller
     
     public function add(Request $request){
 
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        $this->validateData($request);              
         
-        $imageTmpName = $request->file($this->imageInputName);
-        $imageName = $imageTmpName->getClientOriginalName();
-           
-       
-        $image_path = $request->file($this->imageInputName)->storeAs(
-            'uploads',
-             $imageName,
-            'public_images'
-        );
-       
-        
+        $image_path = $this->storeImage($request);
        
         $car = new Car();
         $car->name = $request->name;
@@ -41,25 +29,55 @@ class CarController extends Controller
 
     }
 
+    public function validateData($request){
+
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'price' => 'required',
+             'name' => 'required'
+        ]);
+
+    }
+
+    public function storeImage($request){
+
+        $imageTmpName = $request->file($this->imageInputName);
+        $imageName = $imageTmpName->getClientOriginalName();
+           
+       
+        $image_path = $request->file($this->imageInputName)->storeAs(
+            'uploads',
+             $imageName,
+            'public_images'
+        );
+
+        return $image_path;
+    }
+
    public function delete(Request $request){
 
         $car_id = $request->car_id;
         $car = Car::find($car_id);
 
+        $car_name = $car->name;
+
         //delete image from storage location
         Storage::disk('public_images')->delete($car->image);        
-        $request->session()->flash('status', "$car->name deleted Successfully!"); //success toast
 
         $car->delete();
+
+        $request->session()->flash('status', "$car_name deleted Successfully!"); //success toast
+
+        //returns json response to ajax
         return response()->json(['url'=>url('car/list')]);
+
    }
 
-    public function list(){
+    public function list(){        
 
-        
-
-        $cars = DB::table('cars')->get();
+        $cars = DB::table('cars')->orderBy('created_at', 'desc')->get();
         return view('car.list', ['cars' => $cars]);
+
     }
     
 }

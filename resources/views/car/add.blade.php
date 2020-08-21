@@ -29,20 +29,8 @@
         <label  class="error"><strong>{{ $message }}</strong></label>
     @enderror    
 </div>
-    <input type="submit" value="Sign Up" class="btn form-btn  bcg-dark btn-block">
+    <input type="submit" value="Add Car" class="btn form-btn  bcg-dark btn-block">
     </form>
 </div>
 </div>
-
-<?php if(Session::get('status') !== null){ ?>
-        <script>
-          var status = "<?php echo Session::get('status') ?>";
-           $.toast({
-                heading: 'Success',
-                text: status,
-                showHideTransition: 'slide',
-                icon: 'info'
-            });
-        </script>
-    <?php } ?> 
 @endsection

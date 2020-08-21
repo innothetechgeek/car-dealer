@@ -14,23 +14,25 @@
 @section('body')      
     <div class="row">
     @foreach ($cars as $car)
-        <div class="col-md-3">
-            <div class="card mb-4 box-shadow">
-            <?php 
-                 $exists = Storage::disk('public_images')->exists($car->image);
-                $image = $exists ? "assets/images/".$car->image : 'assets/images/uploads/vehicle-placeholder.png';
-               
-            ?>
-                <img class="card-img-top" src="{{ asset($image) }}" alt="Card image cap">
-                <div class="card-body">
-                <h5 class="card-title">{{$car->name}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{$car->created_at}}</h6>
-                    <p class="card-text">Your price is R{{$car->price}}</p>
-                    <div class="d-flex justify-content-end">      
-                        <small id = "car#{{$car->id}}" class="del-item" data-title="Delete Car?">delete item</small>                     
+        <a href="{{ route('edit-car') }}">
+            <div class="col-md-3">
+                <div class="card mb-4 box-shadow">
+                <?php 
+                    $exists = Storage::disk('public_images')->exists($car->image);
+                    $image_path = $exists ? "assets/images/".$car->image : 'assets/images/uploads/vehicle-placeholder.png';
+                
+                ?>
+                    <img  height = '165' class="card-img-top" src="{{ asset($image_path) }}" alt="Card image cap">
+                    <div class="card-body">
+                    <h5 class="card-title">{{$car->name}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{$car->created_at}}</h6>
+                        <p class="card-text">Your price is R{{$car->price}}</p>
+                        <div class="d-flex justify-content-end">      
+                            <small id = "car#{{$car->id}}" class="del-item" data-title="Delete Car?">delete item</small>                     
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     @endforeach           
     </div>  
@@ -91,14 +93,14 @@
     }
     </script> 
 
-<?php if(Session::get('status') !== null){ ?>
+    <?php if(Session::get('status') !== null){ ?>
         <script>
           var status = "<?php echo Session::get('status') ?>";
            $.toast({
                 heading: 'Success',
                 text: status,
                 showHideTransition: 'slide',
-                icon: 'info'
+                hideAfter: 5000,
             });
         </script>
     <?php } ?>    
