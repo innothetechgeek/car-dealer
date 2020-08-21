@@ -16,7 +16,12 @@
     @foreach ($cars as $car)
         <div class="col-md-3">
             <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src="{{asset('/assets/images/car_place_holder.jpg')}}" alt="Card image cap">
+            <?php 
+                 $exists = Storage::disk('public_images')->exists($car->image);
+                $image = $exists ? "assets/images/".$car->image : 'assets/images/uploads/vehicle-placeholder.png';
+               
+            ?>
+                <img class="card-img-top" src="{{ asset($image) }}" alt="Card image cap">
                 <div class="card-body">
                 <h5 class="card-title">{{$car->name}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{$car->created_at}}</h6>
