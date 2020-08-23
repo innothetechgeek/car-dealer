@@ -11,14 +11,13 @@
 
     <!-- jquery confirmation -->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/jquery-confirm.min.css') }}">  
- 
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/jquery.toast.min.css') }}">
 
-    
+    <!-- jquery toast plugin -->
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/jquery.toast.min.css') }}">
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <title>Car Dealer</title>
+    <title>Cars for Sale in South Africa - Car Dealer</title>
   </head>
   <body>
   <nav class="navbar navbar-expand-lg navbar navbar-dark bcg-dark box-shadow">
@@ -35,7 +34,7 @@
                                                         document.getElementById('logout-form').submit();">Logout</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             @csrf
-                                        </form>
+                </form>
             </li>
             @endif
         </ul>
@@ -45,23 +44,12 @@
     </div>
     </div>
     </nav>
-
-
-
-        <!-- <div class="navbar navbar-dark bcg-dark box-shadow">
-       
-
-         <div class="container d-flex justify-content-between">
-          <a href="{{ URL::asset('/') }}" class="navbar-brand d-flex align-items-center">
-            <strong>DealerApp</strong>
-          </a>
-           
-        </div> -->
-      <!-- </div> --> 
       @yield('jumbotron')
-    <div class=container>
-       
+
+    <div class=container>   
+
         @yield('body')
+
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
