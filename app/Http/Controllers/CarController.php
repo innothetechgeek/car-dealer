@@ -23,7 +23,7 @@ class CarController extends Controller
         $car->image = $image_path;
         $car->save();
 
-        $request->session()->flash('status', "$car->name added Successfully!"); //success toast
+        $request->session()->flash('status', ["message"=>"$car->name added Successfully!","car_id"=>$car->id]);//success toast
 
         return redirect('car/list');
 
@@ -55,8 +55,9 @@ class CarController extends Controller
         
         $car = Car::find($car_id);
 
-        $car  =  $car ?  $car : false;
-
+        $car  =  $car ?  $car : false;     
+        $request->session()->forget('status'); //avoids 'car/daleted successfully' message being shown if the user goes back without hitting save
+        $request->session()->save();
         return view('car/edit',['car' => $car]);
 
     }
@@ -84,7 +85,7 @@ class CarController extends Controller
         $car->save();
         
 
-        $request->session()->flash('status', "$car->name updated Successfully!"); //success toast
+        $request->session()->flash('status', ["message"=>"$car->name updated Successfully!",'car_id'=>$car->id]); //success toast
 
         return redirect('car/list');
         
@@ -119,7 +120,7 @@ class CarController extends Controller
 
         $car->delete();
 
-        $request->session()->flash('status', "$car_name deleted Successfully!"); //success toast
+        $request->session()->flash('status', ["message"=>"$car_name deleted Successfully!"]); //success toast
 
         //returns json response to ajax
         return response()->json(['url'=>url('car/list')]);
@@ -127,7 +128,7 @@ class CarController extends Controller
    }
 
     public function list(){        
-
+       
         $cars = DB::table('cars')->orderBy('created_at', 'desc')->get();
         return view('car.list', ['cars' => $cars]);
 

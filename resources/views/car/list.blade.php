@@ -15,7 +15,7 @@
     <div class="row">
     @foreach ($cars as $car)        
             <div class="col-md-3">           
-                <div class="card mb-4 box-shadow">
+                <div class="card mb-4 box-shadow" data-toggle="tooltip" data-placement="top" title="Edit this item">
                 <a href="{{ url('car/edit/'.$car->id) }}">
                     <?php 
                         $exists = Storage::disk('public_images')->exists($car->image);
@@ -29,7 +29,7 @@
                         <p class="card-text">Your price is R{{$car->price}}</p>
                 </a>
                         <div class="d-flex justify-content-end">      
-                            <small id = "car#{{$car->id}}" style = "cursor:default" class="del-item" data-title="Delete Car?">delete item</small>                     
+                            <small id = "car_{{$car->id}}" style = "cursor:default" class="del-item" data-title="Delete Car?">delete item</small>                     
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
     function deleteCar(input_id,e){
         e.preventDefault();
         var id = input_id.attr('id');
-        var car_id = id.split('#')[1];
+        var car_id = id.split('_')[1];
         var _token   = $('meta[name="csrf-token"]').attr('content');
         var route  = "{{ url('car/delete') }}";
            
@@ -97,21 +97,49 @@
        });
 
     }
+
+    function applyAmimationAfterAddOrEdit(itemId){
+        setTimeout(function(){
+            $("#car_"+itemId).closest('.card').animate({
+            height: 'toggle'
+            },1000, 'linear').animate({
+            height: 'toggle'
+            },1000, 'linear');
+        },2000);
+
+
+        $('html, body').animate({
+        scrollTop: $("#car_"+itemId).closest('.card').parent().offset().top-130
+    }, 2000);
+    }
+
+    //displays 'car deleted/updated successfully' after deleting a car
+    function showToast(message){
+        $.toast({
+                heading: 'Success',
+                text: message,
+                showHideTransition: 'slide',
+                hideAfter: 5000,
+        });
+    }
+
     </script> 
 
     <!-- show toast at the bottom of the page -->
-    <?php if(Session::get('status') !== null){ ?>
-        <script>
-          var status = "<?php echo Session::get('status') ?>";
-           $.toast({
-                heading: 'Success',
-                text: status,
-                showHideTransition: 'slide',
-                hideAfter: 5000,
-            });
-        </script>
-    <?php } ?>    
+    <?php if(Session::has('status')){ ?>
+            <script>
 
+            var message = "<?php echo Session::get('status')['message'] ?>";
+            var item_id = "<?php echo 
+                                isset(Session::get('status')['car_id']) ? Session::get('status')['car_id'] : '' ?>";
+            showToast(message);
+            if(item_id != '')applyAmimationAfterAddOrEdit(item_id);       
+            
+            </script>
+            
+            <?php         
+
+        }  ?>       
 
     @endsection
     

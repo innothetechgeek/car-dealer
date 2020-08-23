@@ -14,8 +14,6 @@
  
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/jquery.toast.min.css') }}">
 
-    
-
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <title>Car Dealer</title>
